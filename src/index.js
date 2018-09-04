@@ -3,7 +3,8 @@ const app = express();
 const morgan = require("morgan");
 const Joi = require("Joi");
 
-const userUtil = require("../src/util/user.util")
+const appUtil = require("../src/util/app.util");
+const validateUtil = require("../src/util/validate.util")
 
 const users = require("../src/data/users.json");
 const chats = require("../src/data/chats.json");
@@ -21,7 +22,7 @@ app.get("/user", (req, res) =>{
 });
 
 app.get("/user/:id", (req, res) =>{
-    const user = userUtil.findUser(users, req.params.id);
+    const user = appUtil.findUser(users, req.params.id);
     if(user){
         res.json(user);
     }else{
@@ -30,7 +31,7 @@ app.get("/user/:id", (req, res) =>{
 });
 
 app.get("/user/:id/match", (req,res) =>{
-    const user = userUtil.findUser(users, req.params.id);
+    const user = appUtil.findUser(users, req.params.id);
     if(user){
         res.json(user.matched)
     }else {
@@ -44,7 +45,7 @@ app.get("/chat", (req,res) =>{
 });
 
 app.get("/chat/:id", (req,res) =>{
-    const chat = findChat(req.params.id);
+    const chat = appUtil.findChat(req.params.id);
     if (chat){
         res.json(chat);
     }else{
@@ -54,7 +55,7 @@ app.get("/chat/:id", (req,res) =>{
 
 app.post("/user", (req,res) =>{
 
-    const {error} = validadeUser(req.body);
+    const {error} = validateUtil.validateUser(req.body);
 
     if (error){
         res.status(400).json(error.details[0].message);
@@ -72,11 +73,11 @@ app.post("/user", (req,res) =>{
 });
 
 app.put("/user/:id", (req,res) =>{
-    const user = userUtil.findUser(req.params.id);
+    const user = appUtil.findUser(users, req.params.id);
     if(!user){
         res.status(404).json("Usuário com esse id não foi encontrado");
     }else{
-        const {error} = validadeUser(req.body);
+        const {error} = validateUtil.validateUser(req.body);
         if(error){
             res.status(400).json(error.details[0].message);
         }else{
@@ -89,11 +90,11 @@ app.put("/user/:id", (req,res) =>{
 });
 
 app.put("/chat/:id", (req,res) =>{
-    const chat = findChat(req.params.id);
+    const chat = appUtil.findChat(req.params.id);
     if(!chat){
         res.status(404).res.json("Chat com esse id não foi encontrado");
     }else {
-        const {error} = validateChat(req.body);
+        const {error} = validateUtil.validateChat(req.body);
         if(error){
             res.status(400).json(error.details[0].message);
         }else{
@@ -105,7 +106,7 @@ app.put("/chat/:id", (req,res) =>{
 });
 
 app.delete("/user/:id", (req, res) =>{
-    const user = userUtil.findUser(req.params.id);
+    const user = appUtil.findUser(users, req.params.id);
 
     if(user){
         const index = users.indexOf(user);
@@ -116,7 +117,7 @@ app.delete("/user/:id", (req, res) =>{
 });
 
 app.delete("/chat/:id", (req,res) =>{
-    const chat = findChat(req.params.id);
+    const chat = appUtil.findChat(req.params.id);
     if(chat){
         const index = chats.indexOf(chat);
         chats.splice(index,1);
@@ -125,26 +126,9 @@ app.delete("/chat/:id", (req,res) =>{
     }
 });
 
-function validadeUser (user){
-        schema = {
-            "name": Joi.string().min(1),
-            "email": Joi.string().email({minDomainAtoms: 2})
-        }
-    return Joi.validate(user, schema);
-}
-
-function validateChat(chat){
-    schema ={
-        "user1": Joi.string().min(1),
-        "user2": Joi.string().min(1)
-    }
-}
 
 
 
-function findChat(chatId){
-    const chat = chats.find((chat) => chat.id === parseInt(chatId));
-}
 
 const port = process.env.port || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
