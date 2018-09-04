@@ -1,0 +1,23 @@
+{
+  "name": "p3-backend",
+  "version": "1.0.0",
+  "description": "Repositório destinado ao backend do projeto da cadeira de Programação III no período 2018.2 do curso de Ciência da Computação UFCG.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattheusB/p3-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MattheusB/p3-backend/issues"
+  },
+  "homepage": "https://github.com/MattheusB/p3-backend#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  }
+}

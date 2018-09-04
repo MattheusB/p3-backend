@@ -1,0 +1,15 @@
+[
+    {"id": 1, 
+        "user1": "Pug", 
+        "user2": "Pug2"
+    },
+
+    {"id": 2, 
+        "user1": "Bulldog", 
+        "user2": "Bulldog2"},
+
+    {"id": 3,
+        "user1": "Husky1",
+        "user2": "Husky2"
+    }
+]
