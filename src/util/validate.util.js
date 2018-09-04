@@ -1,3 +1,5 @@
+const Joi = require("Joi");
+
 function validateUser (user){
     schema = {
         "name": Joi.string().min(1),
@@ -12,4 +14,10 @@ schema ={
     "user2": Joi.string().min(1)
 }
 return Joi.validate(chat, schema);
+}
+
+
+module.exports ={
+    validateChat,
+    validateUser
 }
