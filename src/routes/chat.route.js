@@ -1,19 +1,17 @@
 const express = require("express");
 const router = new express.Router();
 
-
-
 const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util");
 
 const chats = require("../data/chats.json");
 
-router.get("/chat", (req,res) =>{
+router.get("/", (req,res) =>{
     res.json(chats);
 
 });
 
-router.get("/chat/:id", (req,res) =>{
+router.get("/:id", (req,res) =>{
     const chat = appUtil.findChat(req.params.id);
     if (chat){
         res.json(chat);
@@ -24,7 +22,7 @@ router.get("/chat/:id", (req,res) =>{
 
 
 
-router.put("/chat/:id", (req,res) =>{
+router.put("/:id", (req,res) =>{
     const chat = appUtil.findChat(req.params.id);
     if(!chat){
         res.status(404).res.json("Chat com esse id não foi encontrado");
@@ -42,7 +40,7 @@ router.put("/chat/:id", (req,res) =>{
 
 
 
-router.delete("/chat/:id", (req,res) =>{
+router.delete("/:id", (req,res) =>{
     const chat = appUtil.findChat(req.params.id);
     if(chat){
         const index = chats.indexOf(chat);
@@ -51,3 +49,5 @@ router.delete("/chat/:id", (req,res) =>{
         res.status(404).json("Chat com esse id não foi encontrado");
     }
 });
+
+module.exports = router;

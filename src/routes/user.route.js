@@ -7,12 +7,14 @@ const validateUtil = require("../util/validate.util")
 
 const users = require("../data/users.json");
 
-
-router.get("/user", (req, res) =>{
+router.use((req,res,next) => {
+    next();
+});
+router.get("/", (req, res) =>{
     res.json(users);
 });
 
-router.get("/user/:id", (req, res) =>{
+router.get("/:id", (req, res) =>{
     const user = appUtil.findUser(users, req.params.id);
     if(user){
         res.json(user);
@@ -21,7 +23,7 @@ router.get("/user/:id", (req, res) =>{
     }
 });
 
-router.get("/user/:id/match", (req,res) =>{
+router.get("/:id/match", (req,res) =>{
     const user = appUtil.findUser(users, req.params.id);
     if(user){
         res.json(user.matched)
@@ -30,7 +32,7 @@ router.get("/user/:id/match", (req,res) =>{
     }
 });
 
-router.post("/user", (req,res) =>{
+router.post("/", (req,res) =>{
 
     const {error} = validateUtil.validateUser(req.body);
 
@@ -49,7 +51,7 @@ router.post("/user", (req,res) =>{
     
 });
 
-router.put("/user/:id", (req,res) =>{
+router.put("/:id", (req,res) =>{
     const user = appUtil.findUser(users, req.params.id);
     if(!user){
         res.status(404).json("Usuário com esse id não foi encontrado");
@@ -66,7 +68,7 @@ router.put("/user/:id", (req,res) =>{
     }
 });
 
-router.delete("/user/:id", (req, res) =>{
+router.delete("/:id", (req, res) =>{
     const user = appUtil.findUser(users, req.params.id);
 
     if(user){
@@ -76,3 +78,5 @@ router.delete("/user/:id", (req, res) =>{
         res.status(404).json("Usuário com esse id não foi encontrado");
     }
 });
+
+module.exports = router;
