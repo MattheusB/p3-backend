@@ -12,7 +12,7 @@ router.get("/", (req,res) =>{
 });
 
 router.get("/:id", (req,res) =>{
-    const chat = appUtil.findChat(req.params.id);
+    const chat = appUtil.findChat(chats, req.params.id);
     if (chat){
         res.json(chat);
     }else{
@@ -23,7 +23,7 @@ router.get("/:id", (req,res) =>{
 
 
 router.put("/:id", (req,res) =>{
-    const chat = appUtil.findChat(req.params.id);
+    const chat = appUtil.findChat(chats, req.params.id);
     if(!chat){
         res.status(404).res.json("Chat com esse id não foi encontrado");
     }else {

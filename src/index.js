@@ -9,9 +9,11 @@ app.use(express.static("../static"));
 
 const userRoute = require("./routes/user.route.js");
 const chatRoute = require("./routes/chat.route.js");
+const swaggerRoute = require("./routes/swagger.route.js")
 
 app.use("/user", userRoute);
 app.use("/chat", chatRoute);
+app.use("/swagger", swaggerRoute);
 
 app.get("/",(req, res) =>{
     res.json("Welcome to TinDog");
