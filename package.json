@@ -4,6 +4,7 @@
   "description": "Repositório destinado ao backend do projeto da cadeira de Programação III no período 2018.2 do curso de Ciência da Computação UFCG.",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/index.js",
     "test": "mocha"
   },
   "repository": {
