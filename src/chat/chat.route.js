@@ -4,11 +4,24 @@ const router = new express.Router();
 const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util");
 
-const chats = require("../data/chats.json");
+const chats = require("./chats.json");
 
 router.get("/", (req,res) =>{
     res.json(chats);
 
+});
+
+router.post("/", (req,res) =>{
+    const chat = {
+        "id": chats.length + 1,
+        "IdUser1": req.body.IdUser1,
+        "IdUser2": req.body.IdUser2,
+            };
+
+        chats.push(chat);
+        res.json("Chat cadastrado com sucesso");
+
+    
 });
 
 router.get("/:id", (req,res) =>{

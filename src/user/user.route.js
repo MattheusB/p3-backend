@@ -5,7 +5,7 @@ const router = new express.Router();
 const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util")
 
-const users = require("../data/users.json");
+const users = require("./users.json");
 
 router.use((req,res,next) => {
     next();
