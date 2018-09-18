@@ -6,7 +6,6 @@ const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util");
 
 const chats = require("./chats.json");
-<<<<<<< HEAD
 
 cache.put("chats", chats);
 
@@ -14,8 +13,6 @@ cache.put("chats", chats);
 router.use((req,res,next) => {
     next();
 });
-=======
->>>>>>> de4799746986518b4d38e1973e03aa152697de20
 
 router.get("/", (req,res) =>{
     res.json(cache.get("chats"));
@@ -30,12 +27,8 @@ router.post("/", (req,res) =>{
             };
 
         chats.push(chat);
-<<<<<<< HEAD
         cache.put("chats",chats);
-        res.status(200).json("Chat cadastrado com sucesso");
-=======
-        res.json("Chat cadastrado com sucesso");
->>>>>>> de4799746986518b4d38e1973e03aa152697de20
+        res.status(200).json("Chat cadastrado com sucesso.");
 
     
 });
@@ -45,7 +38,7 @@ router.get("/:id", (req,res) =>{
     if (chat){
         res.status(200).json(chat);
     }else{
-        res.status(404).json("Chat com esse id não foi encontrado")
+        res.status(404).json("Chat com esse id não foi encontrado.")
     }
 });
 
