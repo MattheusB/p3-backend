@@ -7,11 +7,8 @@ const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util")
 
 const users = require("./users.json");
-<<<<<<< HEAD
 
 cache.put("users", users);
-=======
->>>>>>> de4799746986518b4d38e1973e03aa152697de20
 
 router.use((req,res,next) => {
     next();
@@ -26,7 +23,7 @@ router.get("/:id", (req, res) =>{
     if(user){
         res.status(200).json(user);
     }else{
-        res.status(404).json("O usuário com esse id não foi encontrado");
+        res.status(404).json("O usuário com esse id não foi encontrado.");
     }
 });
 
@@ -35,7 +32,7 @@ router.get("/:id/match", (req,res) =>{
     if(user){
         res.json(user.matched)
     }else {
-        res.status(404).json("Usuário com esse id não foi encontrado");
+        res.status(404).json("Usuário com esse id não foi encontrado.");
     }
 });
 
