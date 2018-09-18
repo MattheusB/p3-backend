@@ -4,38 +4,14 @@ const swaggerDef = {
     'basePath': '/',
     'host': 'localhost:3000',
     'info': {
-        'description': 'Um tinder bom pra cachorro',
+        'description': 'Um tinder para donos de cachorros',
         'title': 'TinDog',
-        'version': '1.0.0'
-    },
-    'paths': {
-        '/user': {
-            'get': {
-                'summary': 'All users in system',
-                'tags': {'': 'user'},
-                'description': 'Returns a list of all users on system',
-                'responses': {
-                    '200': {
-                        'description': 'A JSON array of all users',
-                        'content': {
-                            'application/json': {
-                                'schema': {
-                                    'type': 'array',
-                                    'items': {
-                                        'type': 'application/json'
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        'version': '1.2.7'
     }
 };
 
 const options = {
-    'apis': ['../routes/**/*.js'],
+    'apis': ['../**/*.swagger.js'],
     'swaggerDefinition': swaggerDef
 };
 

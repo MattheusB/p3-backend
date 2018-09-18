@@ -7,9 +7,9 @@ app.use(morgan("tiny"));
 app.use(express.static("../static"));
 
 
-const userRoute = require("./routes/user.route.js");
-const chatRoute = require("./routes/chat.route.js");
-const swaggerRoute = require("./routes/swagger.route.js")
+const userRoute = require("./user/user.route.js");
+const chatRoute = require("./chat/chat.route.js");
+const swaggerRoute = require("./config/swagger.route.js")
 
 app.use("/user", userRoute);
 app.use("/chat", chatRoute);
