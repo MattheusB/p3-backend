@@ -7,8 +7,11 @@ const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util")
 
 const users = require("./users.json");
+<<<<<<< HEAD
 
 cache.put("users", users);
+=======
+>>>>>>> de4799746986518b4d38e1973e03aa152697de20
 
 router.use((req,res,next) => {
     next();
