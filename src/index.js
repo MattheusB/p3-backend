@@ -9,7 +9,12 @@ app.use(express.static("../static"));
 
 const userRoute = require("./user/user.route.js");
 const chatRoute = require("./chat/chat.route.js");
-const swaggerRoute = require("./config/swagger.route.js")
+const swaggerRoute = require("./config/swagger.route.js");
+const enviroment = process.env.enviroment || "development"
+
+if (enviroment != "production"){
+    console.log("The system is not running in production!");
+}
 
 app.use("/user", userRoute);
 app.use("/chat", chatRoute);
