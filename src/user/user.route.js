@@ -7,9 +7,7 @@ const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util");
 const httpConstrants = require("../constrants/http.constrants");
 
-const users = require("./users.json");
-
-cache.put("users", users);
+const userModel = require("../user/user.model");
 
 router.use((req,res,next) => {
     next();
@@ -52,6 +50,7 @@ router.post("/", (req,res) =>{
             "id": users.length + 1,
             "name": req.body.name,
             "email": req.body.email,
+            "senha": req.body.senha,
             "informacoes": req.body.informacoes
         };
         users.push(user);
@@ -72,6 +71,7 @@ router.put("/:id", (req,res) =>{
         }else{
             user.name = req.body.name ||  user.name
             user.email = req.body.email || user.email
+            user.email = req.body.senha || user.senha
             user.informacoes = req.body.informacoes || user.informacoes
 
             cache.put("chats", chats);

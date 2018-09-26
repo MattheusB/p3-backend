@@ -1,10 +1,17 @@
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://127.0.0.1/tindb", {"useNewUrlParser": true});
 
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(express.static("../static"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({"extended": false}));
 
 
 const userRoute = require("./user/user.route.js");
