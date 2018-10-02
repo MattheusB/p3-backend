@@ -4,11 +4,10 @@ const cache = require("memory-cache");
 
 
 const appUtil = require("../util/app.util");
-const validateUtil = require("../util/validate.util")
+const validateUtil = require("../util/validate.util");
+const httpConstrants = require("../constrants/http.constrants");
 
-const users = require("./users.json");
-
-cache.put("users", users);
+const userModel = require("../user/user.model");
 
 router.use((req,res,next) => {
     next();
@@ -21,10 +20,14 @@ router.get("/", (req, res) =>{
 router.get("/:id", (req, res) =>{
     const user = appUtil.findUser(cache.get("users"), req.params.id);
     if(user){
-        res.status(200).json(user);
+        res.status(httpConstrants.OK).json(user);
     }else{
-        res.status(404).json("O usuário com esse id não foi encontrado.");
+        res.status(httpConstrants.NOT_FOUND).json("O usuário com esse id não foi encontrado.");
     }
+});
+
+router.get("/:id/profile", (req, res) =>{
+    res.json("Informações sobre o usuário");
 });
 
 router.get("/:id/match", (req,res) =>{
@@ -32,7 +35,7 @@ router.get("/:id/match", (req,res) =>{
     if(user){
         res.json(user.matched)
     }else {
-        res.status(404).json("Usuário com esse id não foi encontrado.");
+        res.status(httpConstrants.NOT_FOUND).json("Usuário com esse id não foi encontrado.");
     }
 });
 
@@ -47,11 +50,12 @@ router.post("/", (req,res) =>{
             "id": users.length + 1,
             "name": req.body.name,
             "email": req.body.email,
+            "senha": req.body.senha,
             "informacoes": req.body.informacoes
         };
         users.push(user);
         cache.put("users", users);
-        res.status(200).json("Usuário cadastrado com sucesso");
+        res.status(httpConstrants.OK).json("Usuário cadastrado com sucesso");
     }
     
 });
@@ -59,18 +63,19 @@ router.post("/", (req,res) =>{
 router.put("/:id", (req,res) =>{
     const user = appUtil.findUser(cache.get("users"), req.params.id);
     if(!user){
-        res.status(404).json("Usuário com esse id não foi encontrado");
+        res.status(httpConstrants.NOT_FOUND).json("Usuário com esse id não foi encontrado");
     }else{
         const {error} = validateUtil.validateUser(req.body);
         if(error){
-            res.status(400).json(error.details[0].message);
+            res.status(httpConstrants.BAD_REQUEST).json(error.details[0].message);
         }else{
             user.name = req.body.name ||  user.name
             user.email = req.body.email || user.email
+            user.email = req.body.senha || user.senha
             user.informacoes = req.body.informacoes || user.informacoes
 
             cache.put("chats", chats);
-            res.status(200).json("Usuário atualizado com sucesso");
+            res.status(httpConstrants.OK).json("Usuário atualizado com sucesso");
         }
         
     }
@@ -84,9 +89,9 @@ router.delete("/:id", (req, res) =>{
         users.splice(index,1);
 
         cache.put("chats", chats);
-        res.status(200).json("Usuário deletado com sucesso");
+        res.status(httpConstrants.OK).json("Usuário deletado com sucesso");
     }else{
-        res.status(404).json("Usuário com esse id não foi encontrado");
+        res.status(httpConstrants.NOT_FOUND).json("Usuário com esse id não foi encontrado");
     }
 });
 
