@@ -6,7 +6,7 @@ const appUtil = require("../util/app.util");
 const validateUtil = require("../util/validate.util");
 const httpConstrant = require("../constrants/http.constrants");
 
-const chats = require("./chats.json");
+chats = [];
 
 cache.put("chats", chats);
 
