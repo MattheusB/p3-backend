@@ -13,13 +13,13 @@ const userSchema = new mongoose.Schema(
         "match": [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Por favor, digite um email válido"],
         "required": true
     },
-    "senha": {
+    "password": {
         "type": String,
         "minlength": [5, "A senha é muito curta"],
         "select": false,
         "required": true
     },
-    "informacoes": {
+    "information": {
         "type": String,
         "required": false
     },
