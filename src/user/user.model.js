@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema(
     "password": {
         "type": String,
         "minlength": [5, "A senha é muito curta"],
-        "select": false,
         "required": true
     },
     "information": {
@@ -27,8 +26,12 @@ const userSchema = new mongoose.Schema(
         "type": [Number],
         "required": false
 
-    }
-},
+    },
+    "role": {
+        "type": String,
+        "enum": ["admin", "default"],
+        "required": true
+}},
    {"versionKey": false}
    );
    

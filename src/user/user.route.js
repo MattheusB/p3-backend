@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const httpConstrants = require("../constrants/http.constrants");
 const userModel = require("../user/user.model");
+const auth = require("../auth/auth");
+const bcrypt = require("bcryptjs");
 
 router.use((req,res,next) => {
     next();
@@ -17,7 +19,7 @@ router.get("/", (req, res) =>{
     });
 });
 
-router.get("/:id", (req, res) =>{
+router.get("/:id", auth.ensureAuthenticated, auth.authenticateID, (req, res) =>{
     userModel.findOne({"id": req.params.id}).then((user) =>{
        if(user){
             res.status(httpConstrants.OK).json(user);
@@ -45,6 +47,7 @@ router.get("/:id/likes", (req,res) =>{
 });
 
 router.post("/", (req,res) =>{
+    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
 
     userModel.estimatedDocumentCount().then((lenght) => {
         
@@ -53,7 +56,8 @@ router.post("/", (req,res) =>{
             "name": req.body.name,
             "email": req.body.email,
             "password": req.body.password,
-            "information": req.body.information
+            "information": req.body.information,
+            "role": req.body.role
         };
 
         const newUser = new userModel(user);
@@ -73,7 +77,7 @@ router.post("/", (req,res) =>{
     
 });
 
-router.put("/:id", (req,res) =>{
+router.put("/:id", auth.ensureAuthenticated, auth.authenticateID, (req,res) =>{
     userModel.findOne({"id": req.params.id}).then((user) =>{
         if(!user){
             res.status(httpConstrants.NOT_FOUND).json("Usuário com esse id não foi encontrado.");
@@ -99,7 +103,7 @@ router.put("/:id", (req,res) =>{
 });
 
 
-router.delete("/:id", (req, res) =>{
+router.delete("/:id", auth.ensureAuthenticated, auth.authenticateRole, (req, res) =>{
     userModel.deleteOne({"id": req.params.id}).then((error) =>{
         if(error.n === 1){
             res.status(httpConstrants.OK).json("Usuário deletado com sucesso.");

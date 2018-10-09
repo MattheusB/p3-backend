@@ -2,6 +2,9 @@ const express = require("express");
 const router = new express.Router();
 const httpConstrant = require("../constrants/http.constrants");
 const chatModel = require("../chat/chat.model");
+const auth = require("../auth/auth");
+
+
 
 router.use((req,res,next) => {
     next();
@@ -18,7 +21,7 @@ router.get("/", (req,res) =>{
 
 });
 
-router.post("/", (req,res) =>{
+router.post("/", auth.authenticateRole, auth.ensureAuthenticated, (req,res) =>{
     chatModel.estimatedDocumentCount().then((lenght) =>{
         const chat = {
             "id": length + 1,
@@ -55,7 +58,7 @@ router.get("/:id", (req,res) =>{
 
 
 
-router.put("/:id", (req,res) =>{
+router.put("/:id", auth.authenticateRole, auth.ensureAuthenticated,(req,res) =>{
     chatModel.findOne({"id": req.params.id}).then((chat) =>{
     if(!chat){
         res.status(httpConstrant.NOT_FOUND).res.json("Chat com esse id não foi encontrado.");
@@ -81,7 +84,7 @@ router.put("/:id", (req,res) =>{
 
 
 
-router.delete("/:id", (req,res) =>{
+router.delete("/:id", auth.authenticateRole, auth.ensureAuthenticated,(req,res) =>{
     chatModel.deleteOne({"id": req.params.id}).then((erorr))
     if(error.n === 1){
         res.status(httpConstrant.OK).json("Chat deletado com sucesso.");

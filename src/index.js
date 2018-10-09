@@ -3,6 +3,10 @@ const morgan = require("morgan");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const passport = require("passport");
+const half_hour = 1800000;
+
 
 mongoose.Promise = Promise;
 mongoose.connect("mongodb://127.0.0.1/tindb", {"useNewUrlParser": true});
@@ -13,10 +17,22 @@ app.use(express.static("../static"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended": false}));
 
+require("../src/auth/passport")(passport);
+app.use(session({
+    "secret": "secret",
+    "cookie": {
+        "maxAge": half_hour
+    },
+    "resave": false,
+    "saveUninitialized": false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 const userRoute = require("./user/user.route.js");
 const chatRoute = require("./chat/chat.route.js");
 const swaggerRoute = require("./config/swagger.route.js");
+const loginRoute = require("../src/auth/auth.route.js");
 const enviroment = process.env.enviroment || "development"
 
 if (enviroment != "production"){
@@ -26,6 +42,7 @@ if (enviroment != "production"){
 app.use("/user", userRoute);
 app.use("/chat", chatRoute);
 app.use("/swagger", swaggerRoute);
+app.use("/login", loginRoute)
 
 app.get("/",(req, res) =>{
     res.json("Welcome to TinDog");
