@@ -18,9 +18,17 @@ const userSchema = new mongoose.Schema(
         "minlength": [5, "A senha é muito curta"],
         "required": true
     },
-    "information": {
+    "race": {
         "type": String,
-        "required": false
+        "required": true
+    },
+    "age": {
+        "type": Number,
+        "required": true
+    },
+    "photo": {
+        "type": String,
+        "required": true
     },
     "likes":{
         "type": [Number],

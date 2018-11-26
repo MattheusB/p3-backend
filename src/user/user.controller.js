@@ -49,8 +49,10 @@ exports.addUser = (req,res) =>{
             "name": req.body.name,
             "email": req.body.email,
             "password": req.body.password,
-            "information": req.body.information,
-            "role": req.body.role
+            "race": req.body.race,
+            "age": req.body.age,
+            "role": req.body.role,
+            "photo": req.body.photo
         };
 
         const newUser = new userModel(user);
@@ -78,7 +80,8 @@ exports.updateUser = (req,res) =>{
             user.name = req.body.name ||  user.name
             user.email = req.body.email || user.email
             user.password = req.body.password || user.password
-            user.information = req.body.information || user.information
+            user.race = req.body.race || user.race
+            user.age = req.body.age || user.age
     
             user.save((error) =>{
                 if (error){
