@@ -40,24 +40,24 @@ exports.getUserLikes = (req,res) =>{
 };
 
 exports.addUser = (req,res) =>{
-    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+    req.body.password = bcrypt.hashSync(req.body.user.password, bcrypt.genSaltSync(10))
 
     userModel.estimatedDocumentCount().then((lenght) => {
-        
         const user = {
             "id": lenght + 1,
-            "name": req.body.name,
-            "email": req.body.email,
-            "password": req.body.password,
-            "race": req.body.race,
-            "age": req.body.age,
-            "role": req.body.role,
-            "photo": req.body.photo
+            "name": req.body.user.name,
+            "email": req.body.user.email,
+            "password": req.body.user.password,
+            "race": req.body.user.race,
+            "age": req.body.user.age,
+            "role": req.body.user.role,
+            "photo": req.body.user.photo
         };
-
+        
         const newUser = new userModel(user);
-
+        
         newUser.save((error)=>{
+            console.log(error);
             if (error){
                 const errorMessage = error.errmsg || error.message
                 res.status(400).json(errorMessage);
