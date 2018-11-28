@@ -62,7 +62,7 @@ exports.addUser = (req,res) =>{
                 const errorMessage = error.errmsg || error.message
                 res.status(400).json(errorMessage);
             }else {
-                res.status(httpConstrants.OK).json("Usuário cadastrado com sucesso.");
+                res.status(httpConstrants.OK).json(user);
             }        
         });
 
