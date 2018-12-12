@@ -38,7 +38,16 @@ const userSchema = new mongoose.Schema(
     "role": {
         "type": String,
         "enum": ["admin", "default"],
-}},
+    },
+    "description": {
+        "type": String,
+        "required": false
+    },
+    "address": {
+        "type": String,
+        "required": false
+    }
+},
    {"versionKey": false}
    );
    
