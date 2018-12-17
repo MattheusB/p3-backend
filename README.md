@@ -23,3 +23,23 @@ Proprietários de cães cadastram seu cachorro fornecendo informações sobre o 
 
 # Quem pode usar?
 Qualquer pessoa que tenha um cachorro como bicho de estimação e queira que o mesmo procrie.
+
+# Instalação
+- Faça o clone do repositório:
+```shell
+git clone https://github.com/MattheusB/p3-backend.git
+```
+- Navegue para dentro da pasta:
+```shell
+cd p3-backend
+```
+
+- Instale as dependências:
+```shell
+npm install
+```
+
+- Execute o projeto:
+```shell
+npm start
+```
